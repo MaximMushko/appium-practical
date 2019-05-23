@@ -1,5 +1,6 @@
 package com.company;
 
+
 import com.sun.tools.corba.se.idl.constExpr.And;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
@@ -19,31 +20,27 @@ import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class Swipe {
-
+public class DragAndDrop {
     public static void main(String[] args) throws MalformedURLException {
         AndroidDriver driver = Capabilities.getCapabilities();
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.xpath(".//android.widget.TextView[@text='Views']")).click();
 
-        driver.findElement(By.xpath(".//android.widget.TextView[@text='Date Widgets']")).click();
+        driver.findElement(By.xpath(".//android.widget.TextView[@text='Drag and Drop']")).click();
 
-        driver.findElement(MobileBy.AndroidUIAutomator("text(\"2. Inline\")")).click();
-        driver.findElement(By.xpath("//*[@content-desc='9']")).click();
-
+        WebElement source = (WebElement) driver.findElements(By.xpath(".//android.view.View")).get(0);
+        WebElement destination = (WebElement) driver.findElements(By.xpath(".//android.view.View")).get(1);
 
         TouchAction touchAction = new TouchAction(driver);
 
-        WebElement firstElement = driver.findElement(By.xpath("//*[@content-desc='15']"));
-        WebElement secondElement = driver.findElement(By.xpath("//*[@content-desc='45']"));
-
         touchAction.longPress(
                 LongPressOptions.longPressOptions()
-                        .withElement(element(firstElement))
-                        .withDuration(Duration.ofSeconds(2)))
-                .moveTo(element(secondElement))
+                        .withElement(element(source)))
+                .moveTo(element(destination))
                 .release()
                 .perform();
+
+
     }
 }
